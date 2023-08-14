@@ -80,15 +80,15 @@ router.get('/getuser', auth, (req, res) => {
     const user = req.user
     res.send(user)
 })
-// router.get('/admindefault',async(req,res)=>{
-//    const admin = new Admin({
-//     email:"dipjoy488@gmail.com",
-//     password:"1234567"
-//    })
-//    await admin.save()
+router.get('/admindefault',async(req,res)=>{
+   const admin = new Admin({
+    email:"dipjoy488@gmail.com",
+    password:"1234567"
+   })
+   await admin.save()
 
-//     res.send(admin)
-// })
+    res.send(admin)
+})
 router.get('/getadmin', adminAuth, (req, res) => {
     const admin = req.admin
     res.send(admin)
