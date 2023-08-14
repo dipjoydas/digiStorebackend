@@ -33,7 +33,9 @@ const upload = multer({
         cb(undefined, true)
     }
 })
-
+router.get('/',(req,res)=>{
+    res.send("testing")
+})
 
 // router.get('/productcategory',(req,res)=>{
 //     const category = {
