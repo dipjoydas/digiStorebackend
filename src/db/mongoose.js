@@ -4,7 +4,7 @@ process.env.MONGODBURI
 mongoose.connect(process.env.MONGODBURI,{
     useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
+  createIndexes: true
 })
 
 
