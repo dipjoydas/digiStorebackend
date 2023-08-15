@@ -5,8 +5,19 @@ const Orders = require('../models/orders')
 const auth = require('../middleware/auth')
 const cors = require('cors')
 const router = express.Router()
-router.use(cors())
+
 router.use(express.json())
+const allowedOrigins = ['https://digi-store.netlify.app', 'https://digistoreadmin.netlify.app/'];
+
+router.use(cors())
+router.use((req,res,next)=>{
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    next()
+
+})
 
 router.post('/addtemporaryorder', auth, async (req, res) => {
     // const order = req.body 

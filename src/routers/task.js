@@ -17,7 +17,18 @@ const auth = require('../middleware/auth')
 require("dotenv").config()
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const router = express.Router()
+
+const allowedOrigins = ['https://digi-store.netlify.app', 'https://digistoreadmin.netlify.app/'];
+
 router.use(cors())
+router.use((req,res,next)=>{
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    next()
+
+})
 router.use(express.json())
 router.use(bodyParser.urlencoded({ extended: true }))
 
