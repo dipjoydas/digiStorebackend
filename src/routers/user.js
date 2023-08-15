@@ -73,7 +73,7 @@ router.post('/verifyemail',async(req,res)=>{
     const {otpValue,email} = req.body
    
     const otpFind = await Otp.find({'email':email})
-    if( otpFind[otpFind.length -1].otp == otpValue){
+    if( otpFind[otpFind.length -1]?.otp == otpValue){
         // const user = await User.updateOne({email:email},{status:'active'}, { new: true })
         const user = await User.findOne({'email':email})
         const token = await user.generateAuthToken()

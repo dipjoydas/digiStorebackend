@@ -18,7 +18,7 @@ require("dotenv").config()
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const router = express.Router()
 
-const allowedOrigins = ['https://digi-store.netlify.app', 'https://digistoreadmin.netlify.app/'];
+const allowedOrigins = ['https://digi-store.netlify.app/*', 'https://digistoreadmin.netlify.app/*'];
 
 router.use(cors({
     origin: (origin, callback) => {
