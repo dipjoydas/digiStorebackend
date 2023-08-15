@@ -8,16 +8,17 @@ const router = express.Router()
 
 router.use(express.json())
 const allowedOrigins = ['https://digi-store.netlify.app', 'https://digistoreadmin.netlify.app/'];
+router.use(cors())
 
-router.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  }));
+// router.use(cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     }
+//   }));
 
 router.post('/addtemporaryorder', auth, async (req, res) => {
     // const order = req.body 
@@ -91,28 +92,37 @@ router.get('/getfilterorders', async (req, res) => {
     const startDate = req.query.startdate
     const endDate = req.query.enddate
     const delivered = req.query.delivered
-    if ((startDate == undefined) && (endDate == undefined)&&(Boolean(delivered))) {
-        const response = await Orders.find({ delivered:delivered})
-        res.send(response)
-
-        
-
-    }
-    if ((startDate != undefined) && (endDate != undefined) && (delivered != undefined)) {
-  
-        const response = await Orders.find({ timestamp: { $gte: startDate, $lte: endDate }, delivered: delivered })
-        res.send(response)
-
-      
-
-    }
-    if((startDate == undefined) && (endDate == undefined) && (delivered == undefined)){
-        const response = await Orders.find({}).limit(5)
+    res.setHeader('Content-Type', 'application/json');
+    try{
+        if ((startDate == undefined) && (endDate == undefined)&&(Boolean(delivered))) {
+            const response = await Orders.find({ delivered:delivered})
+    
             res.send(response)
-   
-           
+    
+            
+    
+        }
+        if ((startDate != undefined) && (endDate != undefined) && (delivered != undefined)) {
+      
+            const response = await Orders.find({ timestamp: { $gte: startDate, $lte: endDate }, delivered: delivered })
+            res.send(response)
+    
+          
+    
+        }
+        if((startDate == undefined) && (endDate == undefined) && (delivered == undefined)){
+            const response = await Orders.find({}).limit(5)
+                res.send(response)
+       
+               
+    
+        }
+        
+    }catch(error){
+        console.log(error)
 
     }
+   
 
 })
 
