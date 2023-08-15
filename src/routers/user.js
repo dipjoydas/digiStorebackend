@@ -11,16 +11,17 @@ const ResetOtp = require('../models/resetOtp')
 const {sendOtp,sendResetOtp} = require('./sendMail')
 // console.log(sendOtp,sendResetOtp,'sendotp and resend otp')
 const allowedOrigins = ['https://digi-store.netlify.app/', 'https://digistoreadmin.netlify.app/'];
+router.use(cors())
 
-router.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  }));
+// router.use(cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     }
+//   }));
 router.use(express.json())
 
 
