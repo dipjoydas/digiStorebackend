@@ -12,15 +12,15 @@ const {sendOtp,sendResetOtp} = require('./sendMail')
 // console.log(sendOtp,sendResetOtp,'sendotp and resend otp')
 const allowedOrigins = ['https://digi-store.netlify.app', 'https://digistoreadmin.netlify.app/'];
 
-router.use(cors())
-router.use((req,res,next)=>{
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
+router.use(cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
     }
-    next()
-
-})
+  }));
 router.use(express.json())
 
 
