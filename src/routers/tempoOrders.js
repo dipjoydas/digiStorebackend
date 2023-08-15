@@ -88,7 +88,7 @@ router.get('/orders',auth, async (req, res) => {
     }
 
 })
-router.get('/getfilterorders', async (req, res) => {
+router.get('/getfilterorders',cors() ,async (req, res) => {
     const startDate = req.query.startdate
     const endDate = req.query.enddate
     const delivered = req.query.delivered
