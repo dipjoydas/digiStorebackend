@@ -19,16 +19,18 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const router = express.Router()
 
 const allowedOrigins = ['https://digi-store.netlify.app/', 'https://digistoreadmin.netlify.app/'];
+router.use(cors())
 
-router.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  }));
+
+// router.use(cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     }
+//   }));
 router.use(express.json())
 router.use(bodyParser.urlencoded({ extended: true }))
 
