@@ -70,6 +70,44 @@ router.post('/signup', async (req, res) => {
     }
 
 })
+router.post('/resendopt',async(req,res)=>{
+    try{
+        const otpgen = ()=>{
+            let otp = Math.floor(Math.random()*1000000)
+           
+            if(otp.toString().length != 6){
+                otpgen()
+            }
+            return otp
+        }
+        const otp = otpgen()
+        const storeOtp = async()=>{
+            const otpObj = {
+                expiresAt: new Date(Date.now() + 60 * 2 * 1000),
+                // expires after 2 minutes from current time
+                email:req.body.email ,
+                otp:otp
+            }
+            const otpModel = new Otp(otpObj)
+            await otpModel.save()
+            //-------------------------------------------- send otp to mail ---------------------------------------
+            sendOtp(otp,req.body.email)
+    
+    
+    
+        }
+        
+        storeOtp()
+        res.send({result:"success"})
+
+    }catch(error){
+        res.send({result:error.message})
+
+    }
+  
+
+
+})
 router.post('/verifyemail',async(req,res)=>{
     const {otpValue,email} = req.body
    
