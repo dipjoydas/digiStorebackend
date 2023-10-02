@@ -299,5 +299,13 @@ router.post('/resetpassword',async(req,res)=>{
     
 
 })
+router.get('/emailcheck/:email',async(req,res)=>{
+    const email = req.params.email 
+   
+    const response = await User.find(({'email':email})).select({email:1,status:1})
+    res.send({email:response})
+    
+
+})
 
 module.exports = router
